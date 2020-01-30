@@ -58,7 +58,53 @@ Check out [configuration.json.dist](configuration.json.dist) for a complete exam
 
 ### Recommended configuration
 
-- `defaultStack = somestack` you can define some default rokka stack for the important images
+- `defaultStack = somestack` you can define some default rokka stack for the imported images
+
+## Using those images in the .hbs templates
+
+When you use a custom storage adapter, you currently can't use the responsive image feature of Ghost for resizing 
+images with eg. `{{img_url feature_image size="s"}}`, but you can do the URLs manually, eg. for delivering
+retina images to retina capable screens:
+
+```html
+<img class="post-card-image"
+src="https://yourorg.rokka.io/dynamic/resize-width-300-height-200-mode-fill--crop-width-300-height-200/o-af-1/-{{encode (img_url feature_image)}}-.jpg"
+srcset="https://yourorg.rokka.io/dynamic/resize-width-300-height-200-mode-fill--crop-width-300-height-200/-{{encode (img_url feature_image)}}-.jpg 1x,
+        https://yourorg.rokka.io/dynamic/resize-width-300-height-200-mode-fill--crop-width-300-height-200/o-af-1-dpr-2/-{{encode (img_url feature_image)}}-.jpg 2x"
+alt="{{title}}"
+/>
+```
+
+or if you have a stack, where you define all those operations and options 
+(see also [Best practices for stack configurations](https://rokka.io/documentation/guides/best-practices-for-stack-configurations.html) for more info)
+you can shorten it a lot:
+
+```html
+<img class="post-card-image"
+src="https://yourorg.rokka.io/yourstack/-{{encode (img_url feature_image)}}-.jpg"
+srcset="https://yourorg.rokka.io/yourstack/-{{encode (img_url feature_image)}}-.jpg 1x,
+        https://yourorg.rokka.io/yourstack/o-dpr-2/-{{encode (img_url feature_image)}}-.jpg 2x"
+alt="{{title}}"
+/>
+```
+
+rokka is smart enough to take the actual hash from that url in `feature_image` 
+and do the same internally as just sending the hash. 
+
+If you add pictures from unsplash or Instagram and want to deliver and import them to rokka, you may 
+have to add the following to your rokka settings:
+
+```
+curl --location --request PUT 'https://api.rokka.io/organizations/yourorg/options' \
+--header 'Api-Key: YOUR_API_KEY' \
+--data-raw '{
+    "remote_fullurl_allow": true,
+    "remote_fullurl_whitelist": [
+        "scontent\\.cdninstagram\\.com",
+        "images\\.unsplash\\.com"
+    ]
+}' 
+```
 
 ## Development
 
