@@ -1,0 +1,14 @@
+{
+
+  "storage": {
+    "active": "ghost-storage-rokka",
+    "ghost-storage-rokka": {
+      "key": "YOUR_API_KEY",
+      "organization": "your-rokka-organization",
+      "defaultStack": "dynamic/af-1",
+    }
+  },
+  "imageOptimization": {
+    "resize":false
+  }
+}
