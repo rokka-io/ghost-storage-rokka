@@ -16,7 +16,7 @@ cd core/server/adapters/storage
 git checkout https://github.com/rokka-io/ghost-adapter-rokka.git rokka
 ```
 
-### Install from Yarn (not yet working)
+### Install from Yarn
 
 - Go into Ghost root directory
 - Download the adapter:
@@ -35,7 +35,7 @@ Here's an example of using this adapter with a containerized Ghost:
 ```Dockerfile
 FROM ghost:3-alpine as rokka
 WORKDIR $GHOST_INSTALL/current
-RUN su-exec node yarn add ghost-storage-rokka@2
+RUN su-exec node yarn add ghost-storage-rokka
 
 FROM ghost:3-alpine
 COPY --chown=node:node --from=rokka $GHOST_INSTALL/current/node_modules $GHOST_INSTALL/current/node_modules
