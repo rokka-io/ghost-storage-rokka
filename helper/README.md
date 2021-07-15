@@ -76,3 +76,40 @@ For this exemple, the `img` HTML tag generated will be
   alt=""
 />
 ```
+
+### Why do I see errors at startup with custom helpers
+
+Ghost is shipped with `gscan` tool that will validate the template. For now, `gscan` does not recognized custom helper. You can ignore this error. 
+
+Error example using the `rokka_image` custom helper:
+
+```bash
+foo-theme           | The currently active theme "foo-theme" has fatal errors.
+foo-theme           | 
+foo-theme           | Error ID:
+foo-theme           |     c92e3b50-e540-11eb-b7e6-71bc3b5e7e91
+foo-theme           | 
+foo-theme           | Details:
+foo-theme           |     checkedVersion: 4.x
+foo-theme           |     name:           foo-theme
+foo-theme           |     path:           /var/lib/ghost/content/themes/foo-theme
+foo-theme           |     version:        1.0.0
+foo-theme           |     errors: 
+foo-theme           |       - 
+foo-theme           |         fatal:    true
+foo-theme           |         level:    error
+foo-theme           |         rule:     Templates must contain valid Handlebars
+foo-theme           |         details:  Oops! You seemed to have used invalid Handlebars syntax. This mostly happens, when you use a helper that is not supported.<br>See the full list of available helpers <a href="https://ghost.org/docs/api/handlebars-themes/helpers/" target=_blank>here</a>.
+foo-theme           |         failures: 
+foo-theme           |           - 
+foo-theme           |             ref:     post.hbs
+foo-theme           |             message: Missing helper: "rokka_image"
+foo-theme           | ----------------------------------------
+foo-theme           | 
+foo-theme           | ThemeValidationError: The currently active theme "foo-theme" has fatal errors.
+foo-theme           |     at Object.getThemeValidationError (/var/lib/ghost/core/server/services/themes/validate.js:69:12)
+foo-theme           |     at Object.module.exports.loadAndActivate (/var/lib/ghost/core/server/services/themes/activate.js:27:36)
+foo-theme           |     at async initFrontend (/var/lib/ghost/core/boot.js:120:5)
+foo-theme           |     at async bootGhost (/var/lib/ghost/core/boot.js:327:9)
+foo-theme           | 
+```
