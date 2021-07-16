@@ -20,11 +20,13 @@ Before Ghost 4.9.0
 After Ghost 4.9.0
 
 ```hbs
-{{#rokka_image feature_image altText=feature_image_alt}}{{/rokka_image}}
+{{#rokka_image feature_image altText=feature_image_alt sizes="(min-width: 1000px) 1000px, 74vw" class="first-class second-class"}}{{/rokka_image}}
 ```
 
 - `feature_image` is the URL of the image pass to a resize action on Rokka.
-- `altText` is an additional parameter to set the `alt` attribute of the `img` HTML tag.
+- `altText` is an optional parameter to set the `alt` attribute of the `img` HTML tag.
+- `sizes` is an optional parameter to override, per usage, the master `size` configuration.
+- `class` is an optional parameter to add some CSS classes to the `img` tag.
 
 If `feature_image` is not provided or is not an image, nothing will be rendered. Some logs are added to the Ghost output.
 
