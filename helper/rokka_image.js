@@ -77,6 +77,7 @@ module.exports = function rokka_image(imageUrl, options) {
         src="https://${activeConfig.organization}.rokka.io/${activeConfig.defaultStack}/-${encodedImageUrl}-.jpg"
         srcset="${generateSrcset(activeConfig, encodedImageUrl)}"
         sizes="${options.hash.sizes || activeConfig.imageConfiguration.sizes}"
+        ${options.hash.class ? 'class="' + options.hash.class + '"' : ''}
         alt="${altText}" />`
     );
 };
