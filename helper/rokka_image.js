@@ -49,11 +49,6 @@ module.exports = function rokka_image(imageUrl, options) {
         return;
     }
 
-    if (!options) {
-        logRokkaRenderingImpossible('No options were passed to the helper');
-        return standardImage(imageUrl);
-    }
-
     if (!storageConfig) {
         logRokkaRenderingImpossible('Storage not defined in configuration');
         return standardImage(imageUrl);
