@@ -3,6 +3,9 @@ const config = require('../../shared/config');
 const logging = require('@tryghost/logging');
 const _ = require('lodash');
 
+/**
+ * @param {string} reason
+ */
 function logRokkaRenderingImpossible(reason) {
     logging.warn(`Cannot generate proper Rokka img. Reason : ${reason}.`);
 }
@@ -36,8 +39,8 @@ function ensureImageConfiguration(activeConfig) {
     }
 }
 
-function generateSrcset(activeConfig, encodedImageUrl) {
-    return activeConfig.imageConfiguration.srcsets.map(s => `https://${activeConfig.organization}.rokka.io/${activeConfig.defaultStack}/resize-width-${s}/-${encodedImageUrl}-.jpg ${s}${activeConfig.imageConfiguration.unit}`).join(',');
+function generateSrcset(activeConfig, encodedImageUrl, stack) {
+    return activeConfig.imageConfiguration.srcsets.map(s => `https://${activeConfig.organization}.rokka.io/${stack}/resize-width-${s}/-${encodedImageUrl}-.jpg ${s}${activeConfig.imageConfiguration.unit}`).join(',');
 }
 
 // eslint-disable-next-line camelcase
@@ -72,10 +75,12 @@ module.exports = function rokka_image(imageUrl, options) {
 
     const altText = options.hash.altText || '';
 
+    const stack = options.hash.stack || activeConfig.defaultStack;
+
     return new SafeString(
         `<img
-        src="https://${activeConfig.organization}.rokka.io/${activeConfig.defaultStack}/-${encodedImageUrl}-.jpg"
-        srcset="${generateSrcset(activeConfig, encodedImageUrl)}"
+        src="https://${activeConfig.organization}.rokka.io/${stack}/-${encodedImageUrl}-.jpg"
+        srcset="${generateSrcset(activeConfig, encodedImageUrl, stack)}"
         sizes="${options.hash.sizes || activeConfig.imageConfiguration.sizes}"
         ${options.hash.class ? 'class="' + options.hash.class + '"' : ''}
         alt="${altText}" />`
