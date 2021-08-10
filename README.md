@@ -13,7 +13,7 @@ A  [rokka](https://rokka.io/) [Ghost](https://github.com/TryGhost/Ghost) storage
 ```bash
 yarn add rokka@2
 cd core/server/adapters/storage
-git checkout https://github.com/rokka-io/ghost-adapter-rokka.git rokka
+git checkout https://github.com/rokka-io/ghost-storage-rokka.git rokka
 ```
 
 ### Install from Yarn

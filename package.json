@@ -2,7 +2,7 @@
   "name": "ghost-storage-rokka",
   "version": "0.1.0",
   "main": "index.js",
-  "repository": "https://github.com/rokka-io/ghost-adapter-rokka.git",
+  "repository": "https://github.com/rokka-io/ghost-storage-rokka.git",
   "author": "rokka@rokka.io",
   "license": "MIT",
   "dependencies": {
