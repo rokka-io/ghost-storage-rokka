@@ -37,7 +37,7 @@ class RokkaAdapter extends BaseAdapter {
       }
       this.rokka.sourceimages.create(this.org, image.originalname, stream, meta).then(res => {
         const rokkaImage = res.body.items[0]
-        const link = 'https://' + this.org + '.rokka.io/' + this.defaultStack + '/' + rokkaImage.short_hash + '/' + rokkaImage.name
+        const link = 'https://' + this.org + '.rokka.io/' + this.defaultStack + '/' + rokkaImage.short_hash + '/' + encodeURIComponent(rokkaImage.name)
         debug('Uploaded:', link)
         resolve(link)
 
