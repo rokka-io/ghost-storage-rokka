@@ -39,8 +39,7 @@ class RokkaAdapter extends BaseAdapter {
         const rokkaImage = res.body.items[0]
         const link = 'https://' + this.org + '.rokka.io/' + this.defaultStack + '/' + rokkaImage.short_hash + '/' + encodeURIComponent(
           rokkaImage.name.replace(/\.[a-zA-Z]{3,4}$/,"").
-          replaceAll(".","_").
-          replaceAll("-","_")
+          replace(/[.\-]/g,"_")
         ) + '.' + rokkaImage.format
         debug('Uploaded:', link)
         resolve(link)
