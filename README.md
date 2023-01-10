@@ -68,8 +68,8 @@ It is possible to use Rokka as storage for Videos, audio, pdf... regarding what 
 ```json
 "storage": {
     "active": "ghost-storage-rokka",
-    "media": "ghost-storage-adapter",
-    "files": "ghost-storage-adapter",
+    "media": "ghost-storage-rokka",
+    "files": "ghost-storage-rokka",
     [...]
 }
 ```
@@ -86,8 +86,8 @@ Then, the Rokka Storage Adapter have to be configured to work with this stack. F
 ```json
 "storage": {
     "active": "ghost-storage-rokka",
-    "media": "ghost-storage-adapter",
-    "files": "ghost-storage-adapter",
+    "media": "ghost-storage-rokka",
+    "files": "ghost-storage-rokka",
     "ghost-storage-rokka": {
         "key": "your_key",
         "organization": "your_org",
