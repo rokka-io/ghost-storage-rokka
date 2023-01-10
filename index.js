@@ -29,6 +29,11 @@ class RokkaAdapter extends BaseAdapter {
      // TBD: Not sure it's actually needed.
   }
 
+  urlToPath() {
+    //Rokka stores element flat.
+    return '/';
+  }
+
   _defineStackToUse(fileName) {
     if (!fileName) {
         return this.defaultStack;
