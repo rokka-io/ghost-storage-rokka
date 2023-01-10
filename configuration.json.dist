@@ -6,6 +6,8 @@
       "key": "YOUR_API_KEY",
       "organization": "your-rokka-organization",
       "defaultStack": "dynamic/af-1",
+      "rawFileExtensions": "mp3,ogg",
+      "sourceFileStack: "source_file"
     }
   },
   "imageOptimization": {
