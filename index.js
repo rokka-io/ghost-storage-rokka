@@ -1,3 +1,5 @@
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable max-lines */
 'use strict'
 
 const BaseAdapter = require('ghost-storage-base')
