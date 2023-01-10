@@ -61,6 +61,8 @@ Check out [configuration.json.dist](configuration.json.dist) for a complete exam
 - `defaultStack = somestack` you can define some default rokka stack for the imported images
 
 ### Using Rokka to as storage for all files
+**IMPORTANT** By activating this feature, Ghost becomes only able to handle the file types that Rokka supports. Other types will result as an error when uploading.
+
 It is possible to use Rokka as storage for Videos, audio, pdf... regarding what is supported. When defining the configuration as mentioned in the [configuration.json.dist](configuration.json.dist), the Rokka Storage adapter is only registered for images. It is possible to also activate it for `Files` and `Medias`. For this, update the configuration as follow
 
 ```json
