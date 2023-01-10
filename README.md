@@ -60,6 +60,51 @@ Check out [configuration.json.dist](configuration.json.dist) for a complete exam
 
 - `defaultStack = somestack` you can define some default rokka stack for the imported images
 
+### Using Rokka to as storage for all files
+**IMPORTANT** By activating this feature, Ghost becomes only able to handle the file types that Rokka supports. Other types will result as an error when uploading.
+
+It is possible to use Rokka as storage for Videos, audio, pdf... regarding what is supported. When defining the configuration as mentioned in the [configuration.json.dist](configuration.json.dist), the Rokka Storage adapter is only registered for images. It is possible to also activate it for `Files` and `Medias`. For this, update the configuration as follow
+
+```json
+"storage": {
+    "active": "ghost-storage-rokka",
+    "media": "ghost-storage-adapter",
+    "files": "ghost-storage-adapter",
+    [...]
+}
+```
+This requires to create a stack for delivering source files on Rokka. In the stack options of Rokka, select the "Source File" options, or when creating through the api :
+
+```json
+"options": {
+    "source_file": true
+}
+```
+
+Then, the Rokka Storage Adapter have to be configured to work with this stack. For this, add the `sourceFileStack ` property in the configuration and set its value to the name of the stack you just created. The default value is `source_file`.
+
+```json
+"storage": {
+    "active": "ghost-storage-rokka",
+    "media": "ghost-storage-adapter",
+    "files": "ghost-storage-adapter",
+    "ghost-storage-rokka": {
+        "key": "your_key",
+        "organization": "your_org",
+        "defaultStack": "your_default_stack",
+        "sourceFileStack" : "your_source_file_stack"
+    }
+},
+```
+
+It is also possible to force some files extensions to be served only through the `sourceFileStack`. For this, in the Ghost Storage Adapter configuration, set the property `rawFileExtensions`. The value should be a string, all extensions separated by a coma (`,`), without dots. E.G. 
+
+```json
+    "rawFileExtensions": "mp3,ogg",
+```
+
+The default value is `mp3`.
+
 ## Using those images in the .hbs templates
 
 When you use a custom storage adapter, you currently can't use the responsive image feature of Ghost for resizing 

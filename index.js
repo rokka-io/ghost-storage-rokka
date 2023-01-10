@@ -1,7 +1,9 @@
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable max-lines */
 'use strict'
 
 const BaseAdapter = require('ghost-storage-base')
-const debug = require('ghost-ignition').debug('ghost-storage-rokka')
+const logging = require('@tryghost/logging');
 const rokka = require('rokka')
 const fs = require("fs")
 const request = require('request').defaults({encoding: null})
@@ -15,19 +17,37 @@ class RokkaAdapter extends BaseAdapter {
     // clone options and overwrite key for not leaking that to logs
     const outputOptions = Object.assign({}, options)
     outputOptions.key = "******"
-    debug("Config Options:",outputOptions)
+    logging.debug(`Rokka configuration: ${JSON.stringify(outputOptions)}`);
     this.org = options.organization
     this.defaultStack = options.defaultStack || 'dynamic/o-af-1'
+    this.sourceFileStack = options.sourceFileStack || 'source_file'
+    this.rawFileExtensions = options.rawFileExtensions?.split(',') || ['mp3']
     this.rokka = rokka({apiKey: config.key || ''})
     this.addFaceDetection = options.addFaceDetection || false
+    logging.info('Rokka Storage Adapter loaded');
   }
 
-  exists(filename) {
-     // TBD: Not sure it's actually needed.
+  exists() {
+    //Rokka handles this already.
+    return false;
   }
 
-  async save(image, noFace) {
-    const stream = fs.createReadStream(image.path)
+  urlToPath() {
+    //Rokka stores element flat.
+    return '/';
+  }
+
+  _defineStackToUse(fileName) {
+    if (!fileName) {
+        return this.defaultStack;
+    }
+
+    const extension = fileName.split('.').pop();
+    return this.rawFileExtensions.includes(extension) ? this.sourceFileStack : this.defaultStack;
+  } 
+
+  async save(file, noFace) {
+    const stream = fs.createReadStream(file.path)
     return new Promise((resolve, reject) => {
       const meta = {
         meta_user: {'tool': 'ghost'}
@@ -35,20 +55,24 @@ class RokkaAdapter extends BaseAdapter {
       if (this.addFaceDetection && !noFace) {
         meta["meta_dynamic"] = {'detection_face': {}}
       }
-      this.rokka.sourceimages.create(this.org, image.originalname, stream, meta).then(res => {
+      
+      const fileName = file.originalname ?? file.name
+
+      this.rokka.sourceimages.create(this.org, fileName, stream, meta).then(res => {
         const rokkaImage = res.body.items[0]
-        const link = 'https://' + this.org + '.rokka.io/' + this.defaultStack + '/' + rokkaImage.short_hash + '/' + encodeURIComponent(
+        const stackToUse = this._defineStackToUse(fileName);
+        const link = 'https://' + this.org + '.rokka.io/' + stackToUse + '/' + rokkaImage.short_hash + '/' + encodeURIComponent(
           rokkaImage.name.replace(/\.[a-zA-Z]{3,4}$/,"").
           replace(/[.\-]/g,"_")
         ) + '.' + rokkaImage.format
-        debug('Uploaded:', link)
+        logging.info(`File Uploaded and accessible at: ${link}`);
         resolve(link)
 
       }).catch(err => {
-        debug("error", err)
+        logging.debug(`Error: ${JSON.stringify(err)}`)
         // try without face, maybe there's an error there
         if (this.addFaceDetection && !noFace) {
-          this.save(image, true)
+          this.save(file, true)
         } else {
           reject(err)
         }
@@ -62,9 +86,8 @@ class RokkaAdapter extends BaseAdapter {
     }
   }
 
-  delete(filename) {
-    // TBD: Not sure it's actually implemented on ghost side yet.
-
+  delete() {
+    // Let Ghost believe that the file has been delete. Rokka manages it
   }
 
   read(options) {
