@@ -60,7 +60,7 @@ class RokkaAdapter extends BaseAdapter {
 
       this.rokka.sourceimages.create(this.org, fileName, stream, meta).then(res => {
         const rokkaImage = res.body.items[0]
-        const stackToUse = this.defineStackToUse(fileName);
+        const stackToUse = this._defineStackToUse(fileName);
         const link = 'https://' + this.org + '.rokka.io/' + stackToUse + '/' + rokkaImage.short_hash + '/' + encodeURIComponent(
           rokkaImage.name.replace(/\.[a-zA-Z]{3,4}$/,"").
           replace(/[.\-]/g,"_")
