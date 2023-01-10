@@ -61,7 +61,7 @@ class RokkaAdapter extends BaseAdapter {
         resolve(link)
 
       }).catch(err => {
-        debug("error", err)
+        logging.debug(`Error: ${JSON.stringify(err)}`)
         // try without face, maybe there's an error there
         if (this.addFaceDetection && !noFace) {
           this.save(file, true)
