@@ -26,7 +26,8 @@ class RokkaAdapter extends BaseAdapter {
   }
 
   exists(filename) {
-     // TBD: Not sure it's actually needed.
+     //Rokka handles this already.
+     return false;
   }
 
   urlToPath() {
@@ -83,9 +84,8 @@ class RokkaAdapter extends BaseAdapter {
     }
   }
 
-  delete(filename) {
-    // TBD: Not sure it's actually implemented on ghost side yet.
-
+  delete() {
+    // Let Ghost believe that the file has been delete. Rokka manages it
   }
 
   read(options) {
