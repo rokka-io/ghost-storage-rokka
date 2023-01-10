@@ -1,7 +1,7 @@
 'use strict'
 
 const BaseAdapter = require('ghost-storage-base')
-const debug = require('ghost-ignition').debug('ghost-storage-rokka')
+const logging = require('@tryghost/logging');
 const rokka = require('rokka')
 const fs = require("fs")
 const request = require('request').defaults({encoding: null})
@@ -15,11 +15,12 @@ class RokkaAdapter extends BaseAdapter {
     // clone options and overwrite key for not leaking that to logs
     const outputOptions = Object.assign({}, options)
     outputOptions.key = "******"
-    debug("Config Options:",outputOptions)
+    logging.debug(`Rokka configuration: ${JSON.stringify(outputOptions)}`);
     this.org = options.organization
     this.defaultStack = options.defaultStack || 'dynamic/o-af-1'
     this.rokka = rokka({apiKey: config.key || ''})
     this.addFaceDetection = options.addFaceDetection || false
+    logging.info('Rokka Storage Adapter loaded');
   }
 
   exists(filename) {
@@ -41,7 +42,7 @@ class RokkaAdapter extends BaseAdapter {
           rokkaImage.name.replace(/\.[a-zA-Z]{3,4}$/,"").
           replace(/[.\-]/g,"_")
         ) + '.' + rokkaImage.format
-        debug('Uploaded:', link)
+        logging.info(`File Uploaded and accessible at: ${link}`);
         resolve(link)
 
       }).catch(err => {
