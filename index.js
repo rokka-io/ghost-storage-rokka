@@ -27,9 +27,9 @@ class RokkaAdapter extends BaseAdapter {
     logging.info('Rokka Storage Adapter loaded');
   }
 
-  exists(filename) {
-     //Rokka handles this already.
-     return false;
+  exists() {
+    //Rokka handles this already.
+    return false;
   }
 
   urlToPath() {
