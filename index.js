@@ -21,7 +21,7 @@ class RokkaAdapter extends BaseAdapter {
     this.org = options.organization
     this.defaultStack = options.defaultStack || 'dynamic/o-af-1'
     this.sourceFileStack = options.sourceFileStack || 'source_file'
-    this.rawFileExtensions = options.rawFileExtensions?.split(',') || ['mp3']
+    this.rawFileExtensions = options.rawFileExtensions?.split(',') || ['mp3', 'wav', 'ogg', 'm4a', 'mp4', 'webm', 'ogv']
     this.rokka = rokka({apiKey: config.key || ''})
     this.addFaceDetection = options.addFaceDetection || false
     logging.info('Rokka Storage Adapter loaded');
