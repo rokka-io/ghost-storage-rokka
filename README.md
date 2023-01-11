@@ -103,7 +103,7 @@ It is also possible to force some files extensions to be served only through the
     "rawFileExtensions": "mp3,ogg",
 ```
 
-The default value is `mp3`.
+The default values are `'mp3', 'wav', 'ogg', 'm4a', 'mp4', 'webm', 'ogv'`.
 
 ## Using those images in the .hbs templates
 
