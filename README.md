@@ -105,6 +105,28 @@ It is also possible to force some files extensions to be served only through the
 
 The default values are `'mp3', 'wav', 'ogg', 'm4a', 'mp4', 'webm', 'ogv'`.
 
+## Face detection
+Depending on your Rokka subscription, you may have access to the Face Detection feature. This feature has to be activated on the Rokka side. 
+
+If this feature is available to you, you can configure the Storage Adapter to request Face Detection while uploading. 
+
+For that, add `addFaceDetection` property to your storage adapter configuration, and set it to `true`.
+
+```json
+{
+    [...]
+    "ghost-storage-rokka": {
+        "defaultStack": "stage_ellexx_com",
+        [...]
+        "addFaceDetection": true
+    }
+}
+```
+
+This Face Detection request is automatically disabled by the Storage Adapter when uploading Raw files.
+
+**NOTE**: If you request Face Detection and that it is not enabled on Rokka, you may experience failing uploads. Check Ghost logs for more information. You can also set the Ghost logging level to `debug` and get more information on why uploads are failing.
+
 ## Using those images in the .hbs templates
 
 When you use a custom storage adapter, you currently can't use the responsive image feature of Ghost for resizing 
